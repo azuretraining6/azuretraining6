@@ -1,0 +1,25 @@
+az group create --location westus --resource-group ASGDEMO
+
+az network vnet create --name classvnet   --resource-group ASGDEMO --address-prefixes 10.10.0.0/16 \
+--subnet-name subnet1 --subnet-prefix 10.10.1.0/24 --subnet-name subnet2 --subnet-prefix 10.10.100.0/24
+
+
+az network vnet subnet create -g ASGDEMO --vnet-name classvnet -n subnet1 \
+    --address-prefixes 10.10.1.0/24
+
+vmName=vm2	
+resourceGroup=
+subnetName=
+vnetName=
+
+az vm create \
+  --resource-group ASGDEMO \
+  --name $vmName \
+  --size Standard_B1s \
+  --image UbuntuLTS \
+  --vnet-name classvnet \
+  --subnet subnet1 \
+  --admin-password "Test@123456789"\
+  --admin-username azureuser \
+  --nsg "" \
+  --tags "type=web"	
