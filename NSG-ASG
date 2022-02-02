@@ -1,3 +1,10 @@
+https://docs.microsoft.com/en-us/azure/virtual-network/application-security-groups
+Above link shows the scenario shown in the class.
+
+
+
+check out the training videos
+
 az group create --location westus --resource-group ASGDEMO
 
 az network vnet create --name classvnet   --resource-group ASGDEMO --address-prefixes 10.10.0.0/16 \
@@ -7,7 +14,7 @@ az network vnet create --name classvnet   --resource-group ASGDEMO --address-pre
 az network vnet subnet create -g ASGDEMO --vnet-name classvnet -n subnet1 \
     --address-prefixes 10.10.1.0/24
 
-vmName=vm2	
+vmName=vm4	
 resourceGroup=
 subnetName=
 vnetName=
@@ -23,3 +30,31 @@ az vm create \
   --admin-username azureuser \
   --nsg "" \
   --tags "type=web"	
+
+az vm create \
+  --resource-group ASGDEMO \
+  --name $vmName \
+  --size Standard_B2s \
+  --image Win2019Datacenter \
+  --vnet-name classvnet \
+  --subnet subnet1 \
+  --admin-password "Test@123456789"\
+  --admin-username azureuser \
+  --nsg "" \
+  --tags "type=web"	
+  
+#commands used on the Linux machine
+sudo -i  
+apt update  
+apt install nginx
+netstat -ntlp (to check the open ports)
+
+
+az network asg create --name ASGLOGIC --resource-group ASGDEMO
+az network asg create --name ASGWEB --resource-group ASGDEMO
+az network asg create --name ASGDB --resource-group ASGDEMO
+
+Ping (to check the connectivity)
+telnet <ip> <port number>
+
+
