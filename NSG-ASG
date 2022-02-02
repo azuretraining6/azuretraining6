@@ -1,8 +1,6 @@
 https://docs.microsoft.com/en-us/azure/virtual-network/application-security-groups
 Above link shows the scenario shown in the class.
 
-
-
 check out the training videos
 
 az group create --location westus --resource-group ASGDEMO
