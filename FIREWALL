@@ -1,0 +1,83 @@
+
+group=firewalldemo
+az group create -g $group -l "eastus"
+username=azureuser
+password='India@123456'
+
+az network vnet create \
+  -n hubvnet \
+  -g $group \
+  -l eastus \
+  --address-prefixes '10.50.0.0/16' \
+  --subnet-name subnet \
+  --subnet-prefixes '10.50.1.0/24'
+
+az vm create \
+    -n vm-hub \
+    -g $group \
+    -l eastus \
+    --image UbuntuLTS \
+	--size Standard_B1s \
+    --admin-username $username \
+    --admin-password $password \
+    --vnet-name hubvnet \
+    --subnet subnet   
+####################################
+az network vnet create \
+  -n spoke1vnet \
+  -g $group \
+  -l eastus \
+  --address-prefixes '10.30.0.0/16' \
+  --subnet-name subnet \
+  --subnet-prefixes '10.30.1.0/24'	
+
+az vm create \
+    -n vm-spoke1 \
+    -g $group \
+    -l eastus \
+    --image UbuntuLTS  \
+	--size Standard_B1s \
+    --admin-username $username \
+    --admin-password $password \
+    --vnet-name spoke1vnet \
+    --subnet subnet \
+	--public-ip-address   
+
+
+az network vnet create \
+  -n spoke2vnet \
+  -g $group \
+  -l eastus \
+  --address-prefixes '10.40.0.0/16' \
+  --subnet-name subnet \
+  --subnet-prefixes '10.40.1.0/24'	
+
+az vm create \
+    -n vm-spoke2 \
+    -g $group \
+    -l eastus \
+    --image UbuntuLTS \
+	--size Standard_B1s \
+    --admin-username $username \
+    --admin-password $password \
+    --vnet-name spoke2vnet \
+    --subnet subnet \
+	--public-ip-address "" 	
+	
+create the firewall, define subnet while creating
+create a hubvm
+
+follow with vnet and vm creation
+
+peer the vnets, validate the vm's are reachable	
+	
+before creating a route, 
+check the internet on hubvm and spoke1vm to demonstrate the internet is not working after the routes are associated
+	
+
+scenario1: Create a NAT rule for spoke2vm and connect from your laptop	
+scenario2:add google via application rule, then access from spoke2
+create a network rule for accessing spoke1vm to spoke2vm (NVA)
+
+sourcenat - inside to outside
+destnation nat - outside to inside
