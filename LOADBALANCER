@@ -1,0 +1,52 @@
+az group create --location westus --resource-group LBDEMO
+
+az network vnet create --name classvnet   --resource-group LBDEMO --address-prefixes 10.10.0.0/16 \
+--subnet-name subnet1 --subnet-prefix 10.10.1.0/24 --subnet-name subnet2 --subnet-prefix 10.10.100.0/24
+
+
+az network vnet subnet create -g LBDEMO --vnet-name classvnet -n subnet1 \
+    --address-prefixes 10.10.1.0/24
+
+vmName=webvm2	
+
+
+az vm create \
+  --resource-group LBDEMO \
+  --name $vmName \
+  --size Standard_B1s \
+  --image UbuntuLTS \
+  --vnet-name classvnet \
+  --subnet subnet1 \
+  --admin-password "Test@123456789"\
+  --admin-username azureuser \
+  --tags "type=webserver"	
+
+az vm create \
+  --resource-group LBDEMO \
+  --name webvm2 \
+  --size Standard_B1s \
+  --image UbuntuLTS \
+  --vnet-name classvnet \
+  --subnet subnet1 \
+  --admin-password "Test@123456789"\
+  --admin-username azureuser \
+  --tags "type=webserver"	
+		
+az vm create \
+  --resource-group LBDEMO \
+  --name webvm3 \
+  --size Standard_B1s \
+  --image UbuntuLTS \
+  --vnet-name classvnet \
+  --subnet subnet1 \
+  --admin-password "Test@123456789"\
+  --admin-username azureuser \
+  --tags "type=webserver"	
+  
+webvm1PublicIP - change the sku type of the public ip's to standard for all the nics. This is a mandatory requirement. 
+
+Edit the /var/www/html/index* page to show webserver1,2 and 3 for testing purposes.
+
+
+  
+				
