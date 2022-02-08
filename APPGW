@@ -1,0 +1,28 @@
+
+group=appgatewaydemo
+az group create -g $group -l "eastus"
+username=azureuser
+password='India@123456'
+
+
+az network vnet create \
+  -n apgwvnet \
+  -g $group \
+  -l eastus \
+  --address-prefixes '10.90.0.0/16' \
+  --subnet-name subnet \
+  --subnet-prefixes '10.90.1.0/24'
+
+for NUM in 1 2 3
+do
+  az vm create \
+    -n vm-web-$NUM \
+    -g $group \
+    -l eastus \
+    --image UbuntuLTS \
+--size Standard_B1s \
+    --admin-username $username \
+    --admin-password $password \
+    --vnet-name apgwvnet \
+    --subnet subnet 
+done
