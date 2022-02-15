@@ -1,0 +1,8 @@
+#cloud-config
+package_upgrade: true
+packages:
+- nginx
+runcmd:
+ - mkdir /home/azureuser/scripts
+ - [ wget, "https://raw.githubusercontent.com/azuretraining6/azuretraining6/main/init.sh", -O, /home/azureuser/scripts/init.sh ]
+ - [ sh, /home/azureuser/scripts/init.sh]
