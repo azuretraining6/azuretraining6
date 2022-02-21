@@ -2,7 +2,7 @@ cat <<EOF > /var/www/html/index.nginx-debian.html
 <!DOCTYPE html>
 <html>
 <head>
-<title> TEST Welcome to $(hostname) nginx!</title>
+<title> TEST Welcome to $(hostname) --nginx!</title>
 <style>
     body {
         width: 35em;
