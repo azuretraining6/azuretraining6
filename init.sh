@@ -12,7 +12,7 @@ cat <<EOF > /var/www/html/index.nginx-debian.html
 </style>
 </head>
 <body>
-<h1>This is my test Welcome to $(hostname)nginx!</h1>
+<h1 Welcome to $(hostname) nginx!!!!!</h1>
 <p>If you see this page, the nginx web server is successfully installed and
 working. Further configuration is required.</p>
 
